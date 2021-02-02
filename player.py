@@ -21,12 +21,14 @@ def read_album():
         requests.get(f'http://192.168.0.181:5005/Stue/clearqueue')
         requests.get(f'http://192.168.0.181:5005/Stue/spotify/now/{msg}')
 
+
 @flicklib.airwheel()
 def volume_ctrl(delta):
     global vol_delta
 
     # Divide the delta value by a magic number, to get a reasonable rate of change
     vol_delta += round(delta/100, 2)
+
 
 @flicklib.flick()
 def next_prev(start, finish):
@@ -35,6 +37,11 @@ def next_prev(start, finish):
         requests.get(f'http://192.168.0.181:5005/Stue/next')
     elif start == 'west' and finish == 'east':
         requests.get(f'http://192.168.0.181:5005/Stue/previous')
+
+
+@flicklib.touch()
+def playpause(location):
+    requests.get(f'http://192.168.0.181:5005/Stue/playpause')
 
 
 def update_volume():
