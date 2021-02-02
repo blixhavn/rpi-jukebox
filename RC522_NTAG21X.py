@@ -33,6 +33,7 @@ class RC522_NTAG21X:
       status = RC522.ERR_NO_TAG
 
       while status != RC522.OK:
+         time.sleep(0.1)
          self.pcd.ISO_StopCrypto()
          status, ATQA = self.pcd.ISO_Request()
 
