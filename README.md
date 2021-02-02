@@ -12,6 +12,8 @@ As mentioned in the forum post, the library requires the pigpiod daemon to run -
 The only dependency is `flicklib`. Instructions to install can be found [here](https://github.com/PiSupply/Flick/tree/master/flick).
 Then, it's a matter of running the `player.py` file. This can be done [as a service](https://medium.com/@benmorel/creating-a-linux-service-with-systemd-611b5c8b91d6) if you want some resilience (e.g. auto restart), or simply by running it in a [screen](https://linuxize.com/post/how-to-use-linux-screen/).
 
+It also relies on using Sonos, with a [node-sonos-http-api](https://github.com/jishi/node-sonos-http-api) running on the local network. Please excuse my horrible hardcoding of the API ip-address and sonos player group.
+
 ### License
 
 Apart from the borrowed RC522 library, the code is MIT licensed. Have at it!
