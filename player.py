@@ -55,9 +55,10 @@ def update_volume():
     global volume
     global vol_delta
 
+    old_vol = int(volume)
     volume += vol_delta
-    if vol_delta != 0:
-        new_vol = int(volume)
+    new_vol = int(volume)
+    if old_vol != new_vol:
         requests.get(f'http://192.168.0.181:5005/Stue/volume/{new_vol}')
         print(f"Volume: {new_vol}")
     vol_delta = 0
@@ -70,7 +71,7 @@ def main():
 
         while True:
             update_volume()
-            sleep(0.2)
+            time.sleep(0.2)
     finally:
         nfc_thread.join()
 
