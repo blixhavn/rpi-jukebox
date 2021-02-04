@@ -25,6 +25,7 @@ def read_album():
         scan_timestamp = datetime.datetime.now()
         if (datetime.datetime.now() - scan_timestamp).seconds > 5 or currently_playing != msg:
             print("Playing from NFC")
+            currently_playing = msg
             requests.get(f'http://192.168.0.181:5005/Stue/clearqueue')
             requests.get(f'http://192.168.0.181:5005/Stue/spotify/now/{msg}')
 
