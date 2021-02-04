@@ -1,3 +1,4 @@
+import datetime
 import RC522
 import requests
 import time
@@ -8,8 +9,12 @@ from RC522_NTAG21X import RC522_NTAG21X
 
 volume = 11
 vol_delta = 0
+currently_playing = ''
+scan_timestamp = datetime.datetime.now()
 
 def read_album():
+    global currently_playing
+
     reader = RC522_NTAG21X()
 
     while True:
@@ -17,9 +22,11 @@ def read_album():
         while nfc_status != RC522.OK:
             nfc_status, msg = reader.read_blocking()
 
-        print("Playing from NFC")
-        requests.get(f'http://192.168.0.181:5005/Stue/clearqueue')
-        requests.get(f'http://192.168.0.181:5005/Stue/spotify/now/{msg}')
+        scan_timestamp = datetime.datetime.now()
+        if (datetime.datetime.now() - scan_timestamp).seconds > 5 or currently_playing != msg:
+            print("Playing from NFC")
+            requests.get(f'http://192.168.0.181:5005/Stue/clearqueue')
+            requests.get(f'http://192.168.0.181:5005/Stue/spotify/now/{msg}')
 
 
 @flicklib.airwheel()
@@ -32,7 +39,6 @@ def volume_ctrl(delta):
 
 @flicklib.flick()
 def next_prev(start, finish):
-    print(start + ' - ' + finish)
     if start == 'east' and finish == 'west':
         requests.get(f'http://192.168.0.181:5005/Stue/next')
     elif start == 'west' and finish == 'east':
@@ -48,10 +54,9 @@ def update_volume():
     global volume
     global vol_delta
 
-    old_vol = int(volume)
     volume += vol_delta
-    new_vol = int(volume)
-    if old_vol != new_vol:
+    if vol_delta != 0:
+        new_vol = int(volume)
         requests.get(f'http://192.168.0.181:5005/Stue/volume/{new_vol}')
         print(f"Volume: {new_vol}")
     vol_delta = 0
