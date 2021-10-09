@@ -10,7 +10,7 @@ As mentioned in the forum post, the library requires the pigpiod daemon to run -
 
 ### Installation
 The only dependency is `flicklib`. Instructions to install can be found [here](https://github.com/PiSupply/Flick/tree/master/flick).
-Then, it's a matter of running the `player.py` file. This can be done [as a service](https://medium.com/@benmorel/creating-a-linux-service-with-systemd-611b5c8b91d6) if you want some resilience (e.g. auto restart), or simply by running it in a [screen](https://linuxize.com/post/how-to-use-linux-screen/).
+Then, it's a matter of running the `player.py` file. This can be done [as a service](https://medium.com/@benmorel/creating-a-linux-service-with-systemd-611b5c8b91d6) if you want some resilience (e.g. auto restart), or simply by running it in a [screen](https://linuxize.com/post/how-to-use-linux-screen/). The file jukebox.service can be copied/moved to `/etc/systemd/system/` and enabled+started with `sudo systemctl enable jukebox && sudo systemctl start jukebox` (this file assumes you are the `pi` user and cloned this repository in the home folder).
 
 It also relies on using Sonos, with a [node-sonos-http-api](https://github.com/jishi/node-sonos-http-api) running on the local network. Please excuse my horrible hardcoding of the API ip-address and sonos player group.
 
