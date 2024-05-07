@@ -27,6 +27,8 @@ def read_album():
 
             requests.get(f'http://192.168.0.181:5005/Stue/volume/{volume}')
             requests.get(f'http://192.168.0.181:5005/Stue/clearqueue')
+            requests.get(f'http://192.168.0.181:5005/Stue/clip/cracle.wav/10')
+            time.sleep(3)
             requests.get(f'http://192.168.0.181:5005/Stue/spotify/now/{msg}')
 
 def main():
